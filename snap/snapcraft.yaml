@@ -1,0 +1,42 @@
+apps:
+  app:
+    command: bin/app
+    daemon: simple
+    environment:
+      PYTHONPATH: $SNAP/lib/python3/site-packages:$PYTHONPATH
+    plugs:
+    - home
+    - network-bind
+  testcli:
+    command: bin/app
+    plugs:
+    - home
+    - network-bind
+  version:
+    command: bin/vers
+    plugs:
+    - home
+    - network-bind
+architectures:
+- build-on: amd64
+  run-on: amd64
+base: core20
+confinement: strict
+description: 'app python driver
+
+  '
+grade: devel
+name: app
+parts:
+  app:
+    build-environment:
+    - PYTHONPATH: $SNAPCRAFT_PART_INSTALL/usr/lib/python3/dist-packages:$PYTHONPATH
+    plugin: python
+    requirements:
+    - requirements.txt
+    source: .
+    stage-packages:
+    - python3-wheel
+    - ncbi-blast+
+summary: python test package
+version: '0.1'
